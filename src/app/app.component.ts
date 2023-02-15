@@ -63,6 +63,11 @@ export class AppComponent {
   trackByFlashId(index, flash) {
     return flash.id;
   }
+
+  handleToggleCard(id: number) {
+    const flash = this.flashs.find((flash) => flash.id == id);
+    flash.show = !flash.show;
+  }
 }
 function getRandomNumber(): number {
   return Math.floor(Math.random() * 100000);
