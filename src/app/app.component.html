@@ -1,5 +1,8 @@
 <div class="flashs">
-  <app-flash></app-flash>
+  <app-flash
+    *ngFor="let flash of flashs; trackBy: trackByFlashId"
+    [flash]="flash"
+  ></app-flash>
 </div>
 
 <router-outlet></router-outlet>

@@ -10,7 +10,7 @@ export class FlashComponent implements OnInit {
   @Input() flash: IFlash = {
     id: 1,
     question: "React to Angular",
-    answer: "No Reaction",
+    answer: "No Reaction :)",
     show: false,
   };
 
