@@ -1,7 +1,6 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, EventEmitter, Input } from "@angular/core";
 import { IFlash } from "./models/flash.model";
 import { NgForm } from "@angular/forms";
-import { FlashComponent } from "./flash/flash.component";
 
 @Component({
   selector: "app-root",
@@ -9,9 +8,7 @@ import { FlashComponent } from "./flash/flash.component";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  @ViewChild("flashForm", { static: true }) flashForm: NgForm;
-  editing = false;
-  editingId;
+  @ViewChild("myFlashForm", { static: true }) flashForm: NgForm;
 
   title = "Flashcards";
 
@@ -80,29 +77,36 @@ export class AppComponent {
     flash.show = !flash.show;
   }
 
+  editing = false;
+  editingId: number;
+
   handleDelete(id: number) {
-    const flashIndex = this.flashs.indexOf(this.getFlashById(id));
-    this.flashs.splice(flashIndex, 1);
+    const flashIndexToDelete = this.flashs.indexOf(this.getFlashById(id));
+    this.flashs.splice(flashIndexToDelete, 1);
   }
 
   handleEdit(id: number) {
     this.editing = true;
     this.editingId = id;
 
-    const flash = this.getFlashById(this.editingId);
-    this.flash.question = flash.question;
-    this.flash.answer = flash.answer;
+    console.log("Hello");
+
+    const flashCardToEdit = this.getFlashById(id);
+    this.flash.question = flashCardToEdit.question;
+    this.flash.answer = flashCardToEdit.answer;
   }
 
   handleUpdate() {
-    const flash = this.getFlashById(this.editingId);
-    this.flash.question = this.flash.question;
-    this.flash.answer = this.flash.answer;
+    const flashCardToUpdate = this.getFlashById(this.editingId);
+    flashCardToUpdate.question = this.flash.question;
+    flashCardToUpdate.answer = this.flash.answer;
     this.handleCancel();
   }
 
   handleCancel() {
-    (this.editing = false), (this.editingId = undefined), this.handleClear();
+    this.editing = false;
+    this.editingId = undefined;
+    this.handleClear();
   }
 
   handleRememberedChange({ id, flag }) {
@@ -127,7 +131,7 @@ export class AppComponent {
   }
 
   getFlashById(id: number): IFlash {
-    return this.flashs.find((flash) => flash.id == id);
+    return this.flashs.find((flash) => flash.id === id);
   }
 }
 
